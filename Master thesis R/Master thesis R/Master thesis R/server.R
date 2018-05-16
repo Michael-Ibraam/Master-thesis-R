@@ -1,9 +1,11 @@
 library(shiny)
 shinyServer(
   function(input, output) {
-      output$out_name <- renderText(input$input_name)
-      output$out_age <- renderText(input$input_age)
-      output$out_gender <- renderText(input$input_gender)
+      output$textOutput_value <- renderPrint(input$selectInput_q3)
+      #observeEvent(input$actionButton_continue,
+      #             alert("This is an alert message. Thanks for watching this video"))
+     # observeEvent(input$actionButton_continue,
+      #             session$sendCustomMessage('PopUpGenerator', list(text = input$TitleInput)))
 
 
   }

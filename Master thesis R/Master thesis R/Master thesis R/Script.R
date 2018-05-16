@@ -1,2 +1,3 @@
 library(shiny)
-runExample("05_sliders")
+options(shiny.port = 5300)
+runApp(appDir = getwd())
