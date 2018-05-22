@@ -1,20 +1,4 @@
 function initialize() {
-
-    var testMatrix = new Array(2);
-    for (var i = 0; i < 3; i++) {
-        testMatrix[i] = new Array(4);
-    }
-   testMatrix[0][0] = "1 sample proportion";
-   testMatrix[0][1] = "2 sample proportion";
-   testMatrix[0][2] = "2 sample proportion";
-   testMatrix[0][3] = "";
-
-   testMatrix[1][0] = "1 sample t";
-   testMatrix[1][1] = "2 sample t";
-   testMatrix[1][2] = "2 sample t paired t";
-   testMatrix[1][3] = "one way anova";
-
-   testMatrix[2][2] = "correlation";
 }
 
 function btn_continue_click() {
@@ -49,8 +33,16 @@ function btn_continue_click() {
     } else {
         var selectedTest = testMatrix[2][q2value];
     }
-    alert(selectedTest);
+    var data = new Array(2);
+    var datax = [0.143561142,-0.193498825,0.623096219,0.009646641,-0.474438322,-0.584871407,1.117821625,-0.562827395,0.068982769,-0.328809884];
+    var datay = [0.79170782,-1.03024246,-0.98014139,-1.23814736,0.04561973,-0.21190141,1.45086513,1.28303213,2.08145402,-0.81507561];
+    data[0] = datax;
+    data[1] = datay;
+    Shiny.onInputChange("selectedTest", selectedTest);
+    Shiny.onInputChange("numberOfSamples", q2value);
+
 }
+
 
 Shiny.addCustomMessageHandler('showMsg',
     function (value) {
