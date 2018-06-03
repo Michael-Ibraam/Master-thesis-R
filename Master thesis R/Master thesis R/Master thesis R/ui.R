@@ -9,7 +9,11 @@ fluidPage(
     titlePanel(title = "Statistical test online web tool"),
     sidebarPanel(
                 includeHTML("www/index.html"),
-                 # Horizontal line ----
+selectInput("q1", label = "What is the type of your data ?", choices = list("Categorical" = 0, "Quantitative" = 1)),
+selectInput("q3", label = "What are you trying to achieve with this statistical test?", choices = list("Compare" = 1, "Find relationship" = 2)),
+selectInput("q2", label = "How many Groups/Samples do you have ?", choices = list("1" = 0, "2" = 1, "2 special samples" = 2, "More than 2" = 3)),
+
+# Horizontal line ----
                  tags$hr(),
 
                  fileInput("file1", "Choose CSV File",
@@ -17,7 +21,7 @@ fluidPage(
                                                 accept = c("text/csv",
                                                          "text/comma-separated-values,text/plain",
                                                          ".csv")),
-                 # Horizontal line ----
+# Horizontal line ----
                  tags$hr(),
 
                  # Input: Checkbox if file has header ----
@@ -30,35 +34,32 @@ fluidPage(
                                                                Tab = "\t"),
                                                    selected = ","),
                 actionButton("btn_click", "Click", onclick = "btn_continue_click()"),
-                
+
                      sliderInput("bins",
                                  "Numer of bins:",
                                  min = 1,
                                  max = 50,
                                  value = 2
                      ),
-                     radioButtons("sample",
-                                 "Please choose one sample t test or two sample t test:",
-                                 choices = c("One sample" = "oneSamp",
-                                             "Two sample" = "twoSamp")),
-                     selectInput("var1",
-                                 label = "Please Select a Numerical Variable",
-                                 ""
-                     ),
-                     conditionalPanel(condition = "input.q2 == '1' || input.q2 == '2'",
-                                      selectInput("var2",
-                                                  label = "Please Select a Numerical Variable",
-                                                  ""
-                                      ),
-                                      radioButtons("varequal",
-                                                   "Are the two samples have equal variance:",
-                                                   choices = c("Yes" = "y",
-                                                               "No" = "n"))
-                                      ),
+                     #radioButtons("sample",
+                                 #"Please choose one sample t test or two sample t test:",
+                                 #choices = c("One sample" = "oneSamp",
+                                             #"Two sample" = "twoSamp")),
+                     selectInput("var1",label = "Please Select a Numerical Variable",""),
+                        conditionalPanel(condition = "input.q2 == '1' || input.q2 == '2'",
+                        selectInput("var2",
+                        label = "Please Select a Numerical Variable",
+                        ""
+                        ),
+                        radioButtons("varequal",
+                        "Are the two samples have equal variance:",
+                        choices = c("Yes" = "y",
+                        "No" = "n"))
+                        ),
 
                      #conditionalPanel(condition = "input.sample == 'twoSamp'",
                                       #selectInput("var2",
-                                                  #label = "Please Select a Numerical Variable",
+                                                   #label = "Please Select a Numerical Variable",
                                                   #""
                                       #),
                                       #radioButtons("varequal",
@@ -85,8 +86,8 @@ fluidPage(
                                  max = 0.99),
                      helpText("Note: Please assign a number between 0 and 1 in the numeric Input")
 
-                     
-    ),
+
+                     ),
     mainPanel(
 
     tabsetPanel(
@@ -98,7 +99,7 @@ fluidPage(
                                h2("Data Summary"),
                                verbatimTextOutput('disc'))),
 
-                   fluidRow(column(10, offset = 1,
+                               fluidRow(column(10, offset = 1,
                                h2("Data Structure"),
                                verbatimTextOutput('str'))),
                    fluidRow(column(10, offset = 1,
@@ -120,21 +121,19 @@ fluidPage(
                                textOutput('pvalue')))
                    )
 
-              )
+                   ),
 
-                # Horizontal line ----
-                #tags$hr(),
-                #hr(),
-                #fluidRow(column(3, verbatimTextOutput("value"))),
+                   # Horizontal line ----
+#tags$hr(),
+hr(),
+fluidRow(column(3, verbatimTextOutput("value")))
+#   tableOutput("contents"),
 
-             #   tableOutput("contents"),
-
-             #   tableOutput("data"),
-
+#   tableOutput("data"),
 
 
-                                   
+
+
           )
   )
   )
-
