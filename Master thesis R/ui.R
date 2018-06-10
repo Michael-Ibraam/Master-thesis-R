@@ -9,7 +9,7 @@ fluidPage(
     titlePanel(title = "Statistical test online web tool"),
     sidebarPanel(
                 includeHTML("www/index.html"),
-selectInput("q1", label = "What is the type of your data ?", choices = list("Categorical" = 0, "Quantitative" = 1)),
+selectInput("q1", label = "What is the type of your data ?", choices = list("Nominal or Categorical" = 0, "Measurement or Quantitative" = 1, "Ordinal or Rank" = 3)),
 selectInput("q3", label = "What are you trying to achieve with this statistical test?", choices = list("Compare" = 1, "Find relationship" = 2)),
 selectInput("q2", label = "How many Groups/Samples do you have ?", choices = list("1" = 0, "2" = 1, "2 special samples" = 2, "More than 2" = 3)),
 
@@ -41,11 +41,11 @@ selectInput("q2", label = "How many Groups/Samples do you have ?", choices = lis
                                  max = 50,
                                  value = 2
                      ),
-                     #radioButtons("sample",
-                                 #"Please choose one sample t test or two sample t test:",
-                                 #choices = c("One sample" = "oneSamp",
-                                             #"Two sample" = "twoSamp")),
-                     selectInput("var1",label = "Please Select a Numerical Variable",""),
+#radioButtons("sample",
+#"Please choose one sample t test or two sample t test:",
+#choices = c("One sample" = "oneSamp",
+#"Two sample" = "twoSamp")),
+                     selectInput("var1", label = "Please Select a Numerical Variable", ""),
                         conditionalPanel(condition = "input.q2 == '1' || input.q2 == '2'",
                         selectInput("var2",
                         label = "Please Select a Numerical Variable",
@@ -57,16 +57,16 @@ selectInput("q2", label = "How many Groups/Samples do you have ?", choices = lis
                         "No" = "n"))
                         ),
 
-                     #conditionalPanel(condition = "input.sample == 'twoSamp'",
-                                      #selectInput("var2",
-                                                   #label = "Please Select a Numerical Variable",
-                                                  #""
-                                      #),
-                                      #radioButtons("varequal",
-                                                   #"Are the two samples have equal variance:",
-                                                   #choices = c("Yes" = "y",
-                                                               #"No" = "n"))
-                                      #),
+                        #conditionalPanel(condition = "input.sample == 'twoSamp'",
+#selectInput("var2",
+#label = "Please Select a Numerical Variable",
+#""
+#),
+#radioButtons("varequal",
+#"Are the two samples have equal variance:",
+#choices = c("Yes" = "y",
+#"No" = "n"))
+#),
                      selectInput("tail",
                                  label = "Please Select a relationship you want to test:",
                                  choices = c("Equal" = "two.sided",
@@ -113,9 +113,9 @@ selectInput("q2", label = "How many Groups/Samples do you have ?", choices = lis
                                h2("Key summary statistics"),
                                p("The observed sample statistics were:"),
                                tableOutput('parametric'),
-                               h2("Hypothesis of the t-test"),
+                               h2("Hypothesis of the test"),
                                p("We are testing the null hypothesis that the mean of population equals to the value you set"),
-                               p("The observed t test statistic :"),
+                               p("The observed test statistic :"),
                                textOutput('tvalue'),
                                p("A low P value suggests that your sample provides enough evidence that you can reject the null hypothesis for the entire population."),
                                textOutput('pvalue')))

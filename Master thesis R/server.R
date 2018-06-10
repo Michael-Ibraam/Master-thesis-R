@@ -98,6 +98,10 @@ shinyServer(
                     #header = input$header,
                     #sep = input$sep)
                     #  output$value <- tr
+                    res <- data()[, input$var1]
+
+                    # output$value <- renderText({ length(res) })
+
                     test <- input$selectedTest
 
                     if (test == "1 sample t" || test == "2 sample t") {
@@ -122,9 +126,8 @@ shinyServer(
                         testout <- reactive({
                             var1 <- data()[, input$var1]
                             conf <- input$conf
-                            length(var1)
                             if (is.null(var1)) { return(NULL) }
-                            t1 <- prop.test(var1, length(var1), alternative = input$tail, conf.level = conf)
+                            t1 <- prop.test(var1,, alternative = input$tail, conf.level = conf)
                             #t.test(var1, alternative = input$tail, mu = input$test, conf.level = conf)
                             ve <- ifelse(input$varequal == 'y', TRUE, FALSE)
                             if (input$q2 == '1' || input$q2 == '2') {
@@ -138,6 +141,24 @@ shinyServer(
                             if (input$q2 == '1' || input$q2 == '2') { return(t2) }
                         })
                     }
+
+                    if (test == "1 sample wilcoxon" || test == "2 sample wilcoxon") {
+                        testout <- reactive({
+                            var1 <- data()[, input$var1]
+                            conf <- input$conf
+                            if (is.null(var1)) { return(NULL) }
+                            t1 <- wilcox.test(var1, alternative = input$tail, mu = input$test, conf.level = conf)
+                            if (input$q2 == '1' || input$q2 == '2') {
+                                var2 <- data()[, input$var2]
+                                if (is.null(var2)) { return(NULL) }
+                                t2 <- wilcox.test(var1, var2, paired= TRUE ,alternative = input$tail, conf.level = conf)
+                            }
+                            if (input$q2 == "0") { return(t1) }
+                            if (input$q2 == '1' || input$q2 == '2') { return(t2) }
+                        })
+                    }
+
+
                     output$tvalue <- renderPrint({
                         vals <- testout()
                         if (is.null(vals)) { return(NULL) }
